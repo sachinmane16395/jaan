@@ -32,13 +32,7 @@ pipeline {
                 echo 'Completed  Building Docker Image'
             }
         }
-        stage('Docker Image Scanning') {
-            steps {
-                echo 'Docker Image Scanning Started'
-                sh 'java -version'
-                echo 'Docker Image Scanning Started'
-            }
-        }
+
                stage(' Docker Image Push to Amazon ECR') {
            steps {
               script {
