@@ -32,6 +32,19 @@ pipeline {
                 echo 'Completed  Building Docker Image'
             }
         }
+        stage(' Docker push to Docker Hub') {
+                           steps {
+                              script {
+                                 withCredentials([string(credentialsId: 'dockerhubCred', variable: 'dockerhubCred')]){
+                                 sh 'docker login -u sachin163 -p ${dockerhubCred}'
+                                 echo "Push Docker Image to DockerHub : In Progress"
+                                 sh 'docker push sachin163/jaan:latest'
+                                 echo "Push Docker Image to DockerHub : In Progress"
+                                 sh 'whoami'
+                                 }
+                              }
+                            }
+                        }
 
                stage(' Docker Image Push to Amazon ECR') {
            steps {
@@ -51,19 +64,7 @@ pipeline {
               }
            }
         }
-         stage(' Docker push to Docker Hub') {
-                   steps {
-                      script {
-                         withCredentials([string(credentialsId: 'dockerhubCred', variable: 'dockerhubCred')]){
-                         sh 'docker login -u sachin163 -p ${dockerhubCred}'
-                         echo "Push Docker Image to DockerHub : In Progress"
-                         sh 'docker push sachin163/jaan:latest'
-                         echo "Push Docker Image to DockerHub : In Progress"
-                         sh 'whoami'
-                         }
-                      }
-                    }
-                }
+
 
 
 
