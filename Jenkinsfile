@@ -44,6 +44,24 @@ pipeline {
                                          sh 'whoami'
                                          }
                                       }
+                                      stage(' Docker Image Push to Amazon ECR') {
+                                                 steps {
+                                                    script {
+                                                       withDockerRegistry([credentialsId:'ecr:ap-south-1:awscred', url:"026145495181.dkr.ecr.ap-south-1.amazonaws.com"]){
+                                                       sh """
+                                                       echo "List the docker images present in local"
+                                                       docker images
+                                                       echo "Tagging the Docker Image: In Progress"
+                                                       docker tag jaan:latest 026145495181.dkr.ecr.ap-south-1.amazonaws.com/jaan:latest
+                                                       echo "Tagging the Docker Image: Completed"
+                                                       echo "Push Docker Image to ECR : In Progress"
+                                                       docker push 026145495181.dkr.ecr.ap-south-1.amazonaws.com/jaan:latest
+                                                       echo "Push Docker Image to ECR : Completed"
+                                                       """
+                                                       }
+                                                    }
+                                                 }
+                                              }
                                     }
                                 }
         }
